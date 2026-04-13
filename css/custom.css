@@ -1,0 +1,71 @@
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
+.padding1px {
+   padding: 1px !important;
+   margin: 1px !important;
+}
+
+.mg-b-5{
+      margin-bottom: 5px;
+}
+
+@page { margin: 0; }
+
+#ios_headerkh
+{
+    font-family: 'Bokor';
+    font-size:22px;
+    font-style: normal;
+    font-weight: 700;
+}
+
+#ios_headeren{
+  font-family: 'Lora', serif;
+  font-size:24px;
+  /*font-style: italic;*/
+  font-weight: 600;
+}
+
+#address{
+  font-family: 'Battambang';
+  font-size: 17px;
+  font-style: normal;
+  font-weight: bold;
+  text-align: center;
+}
+
+#phone{
+  font-family: 'Battambang';
+  font-size: 17px;
+  font-weight: bold;
+  /*letter-spacing: 1px;*/
+  text-align: center;
+  margin: 0 0 2px;
+}
+
+.logo{
+  position: absolute;
+  display: block;
+  float: left;
+}
+
+img{
+  width: 50px;
+  height: 32px;
+}
+
+/*img{
+  width: 155px;
+  height: 105px;
+}*/
+
+
+/*
+hr {
+      border-top: 1px solid #000000 !important;
+      margin-bottom:0px !important;
+      margin-top: 0px !important;
+  }*/

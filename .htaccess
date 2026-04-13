@@ -1,0 +1,55 @@
+# PelinShop - PHP 8.x compatible .htaccess
+# Security & PHP 8 settings
+
+# ─── PHP 8 settings ──────────────────────────────────────────────────────────
+<IfModule mod_php.c>
+    php_flag  display_errors       Off
+    php_flag  log_errors           On
+    php_value error_log            logs/php_errors.log
+    php_value session.cookie_httponly 1
+    php_value session.cookie_samesite Lax
+    php_value upload_max_filesize  8M
+    php_value post_max_size        10M
+    php_value memory_limit         128M
+    php_value max_execution_time   60
+</IfModule>
+
+# ─── Block direct access to sensitive directories ─────────────────────────────
+<FilesMatch "\.(log|git|env|json|txt|md|tpl)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Allow sql.txt to be blocked
+<Files "sql.txt">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Allow deployment-config.json to be blocked
+<Files "deployment-config.json">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Block access to designs/templates_c compiled templates
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^designs/templates_c/ - [F,L]
+    RewriteRule ^designs/cache/       - [F,L]
+    RewriteRule ^designs/configs/     - [F,L]
+    RewriteRule ^internal_libs/       - [F,L]
+    RewriteRule ^external_libs/       - [F,L]
+    RewriteRule ^src/                 - [F,L]
+</IfModule>
+
+# ─── Charset ──────────────────────────────────────────────────────────────────
+AddDefaultCharset UTF-8
+
+# ─── Security headers ─────────────────────────────────────────────────────────
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>

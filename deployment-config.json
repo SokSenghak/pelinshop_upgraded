@@ -1,0 +1,9 @@
+{
+    "type": "ftp",
+    "host": "pelindev.e-khmer.com",
+    "username": "scusersbnnd",
+    "password": "#lWNSulcob",
+    "port": 21,
+    "remotePath": "./pelindev.e-khmer.com",
+    "uploadOnSave": true
+}

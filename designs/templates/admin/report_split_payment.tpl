@@ -1,0 +1,93 @@
+{extends file="admin/layout.tpl"}
+{block name="main"}
+  <ul class="breadcrumb">
+    <li><a href="{$admin_file}">ទំព័រដើម Home</a></li>
+    <li class="active"> របាយការណ៍បង់បណ្ដាក់ (Split Payment Report)</li>
+  </ul>
+
+  <div class="panel panel-primary">
+    <div class="panel-heading"><h3 class="panel-title"><i class="glyphicon glyphicon-shopping-cart"></i>&nbsp; របាយការណ៍បង់បណ្ដាក់ (Split Payment Report)</div>
+    <div class="table-responsive">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-md-offset-6 col-md-6">
+            <form role="form" method="get" action="{$admin_file}" class="form-inline">
+              <input type="hidden" name="task" value="report_split_payment">
+              <div class="form-group">
+                  <select name="customer_id" class="form-control select2">
+                      <option value="">ជ្រើសរើសអតិថិជន(Select Customer)</option>
+                      {foreach from=$list_customer_name item="customer"}
+                        <option value="{$customer.id}" {if $smarty.get.customer_id|escape eq $customer.id}selected{/if}>{$customer.name} ({$customer.phone})</option>
+                      {/foreach}
+                  </select>
+              </div>
+              <div class="input-group">
+                <input type="text" value="{$smarty.get.kwd|escape}" name="kwd" class="form-control" placeholder="ស្វែងរក (Search for...)" autofocus>
+                <span class="input-group-btn">
+                  <button class="btn btn-success" type="submit"><li class="glyphicon glyphicon-search"></li></button>
+                </span>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <hr style="margin-top:5px;margin-bottom:5px;" />
+        <div class="table-responsive">
+			<table class="table table-bordered table-striped table-hover">
+				<thead class="table_header">
+					<th class="text-center">សកម្មភាព (Action)</th>
+					<th>ឈ្មោះអតិថិជន (Customer Name)</th>
+					<th>ឈ្មោះបុគ្គលិក (Staff Name)</th>
+					<th>ចំនួនទឹកប្រាក់បានបង់ (Total Split)</th>
+					<th>ទឹកប្រាក់សរុប (Total)</th>
+				</thead>
+				<tbody>
+				{if $list_orderlist_data|@count gt 0}
+					{foreach from=$list_orderlist_data item=data}
+					<tr>
+						<td class="text-center" valign="top" width="170px;">
+						<span data-toggle="tooltip" title="Split Payment Detail">
+							<a href="{$index_file}?task=report_split_payment&amp;action=detail&amp;cus_id={$data.customer_id}" class="btn radius-50 btn-primary btn-sm" name="view" value=""><i class="fa fa-plus-circle"></i></a>
+						</span>
+						</td>
+						<td>{if $data.customer_name}{$data.customer_name} ({$data.customer_phone}){else} ~ {/if}</td>
+						<td>{$data.staff_name}</td>
+						<td>$ {$data.total_payment|number_format:2}</td>
+						<td>$ {$data.sub_total|number_format:2}</td>
+					</tr>
+					{/foreach}
+				{else}
+					<tr><td class="text-center" colspan="8"><h4>មិនមានព័ត៌មានបញ្ជីបញ្ជាទិញទេ។ (There is no order list information.)</h4></td></tr>
+				{/if}
+				</tbody>
+			</table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {include file="common/paginate.tpl"}
+{/block}
+{block name="javascript"}
+<script>
+$(function () {
+  $('#order_date_from').datetimepicker({
+    lang: 'en',
+    format: 'Y-m-d',
+    timepicker: false
+  });
+  $('#order_date_to').datetimepicker({
+    lang: 'en',
+    format: 'Y-m-d',
+    timepicker: false
+  });
+});
+
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip({
+    placement : 'top'
+  });
+
+  $('.select2').select2();
+});
+</script>
+{/block}
