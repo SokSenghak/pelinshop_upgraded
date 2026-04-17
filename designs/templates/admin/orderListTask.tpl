@@ -15,7 +15,7 @@
               <input type="hidden" name="task" value="order_list">
               <div class="form-group">
                 <div class="input-group date">
-                  <input type="text" id="order_date_from" value ="{$smarty.get.from|escape}" class="form-control" name="from" placeholder="កាលបរិច្ឆេទបញ្ជាទិញពី (Order Date From)"/>
+                  <input type="text" id="order_date_from" value ="{$smarty.get.from|default:''|escape}" class="form-control" name="from" placeholder="កាលបរិច្ឆេទបញ្ជាទិញពី (Order Date From)"/>
                   <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                   </span>
@@ -23,7 +23,7 @@
               </div>
               <div class="form-group">
                 <div class="input-group date" >
-                  <input type="text" id="order_date_to" value ="{$smarty.get.to|escape}" class="form-control" name="to" placeholder="ទៅកាលបរិច្ឆេទបញ្ជាទិញ (Order Date To)" />
+                  <input type="text" id="order_date_to" value ="{$smarty.get.to|default:''|escape}" class="form-control" name="to" placeholder="ទៅកាលបរិច្ឆេទបញ្ជាទិញ (Order Date To)" />
                   <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                   </span>
@@ -33,12 +33,12 @@
                   <select name="branch" class="form-control">
                       <option value="">ជ្រើសរើសសាខា (Select Branch)</option>
                     {foreach from=$list_branch_name item="branch"}
-                      <option value="{$branch.id}" {if $smarty.get.branch|escape eq $branch.id}selected{/if}>{$branch.name}</option>
+                      <option value="{$branch.id}" {if $smarty.get.branch|default:''|escape eq $branch.id}selected{/if}>{$branch.name}</option>
                     {/foreach}
                   </select>
               </div>
               <div class="input-group">
-                <input type="text" value="{$smarty.get.kwd|escape}" name="kwd" class="form-control" placeholder="ស្វែងរក (Search for...)" autofocus>
+                <input type="text" value="{$smarty.get.kwd|default:''|escape}" name="kwd" class="form-control" placeholder="ស្វែងរក (Search for...)" autofocus>
                 <span class="input-group-btn">
                   <button class="btn btn-success" type="submit"><li class="glyphicon glyphicon-search"></li></button>
                 </span>

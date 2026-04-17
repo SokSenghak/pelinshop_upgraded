@@ -10,7 +10,7 @@
 					<input type="hidden" name="task" value="order_history">
 					<div class="form-group" style="margin-bottom: 5px;">
 						<div class="input-group date">
-							<input type="text" id="date_from" value ="{if $smarty.get.from}{$smarty.get.from|escape}{else}{$from_date}{/if}" class="form-control" name="from" placeholder="ពីកាលបរិច្ឆេទបញ្ជាទិញ (Order Date From)" autocomplete="off"/>
+							<input type="text" id="date_from" value ="{if $smarty.get.from|default:''}{$smarty.get.from|default:''|escape}{else}{$from_date}{/if}" class="form-control" name="from" placeholder="ពីកាលបរិច្ឆេទបញ្ជាទិញ (Order Date From)" autocomplete="off"/>
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -18,7 +18,7 @@
 					</div>
 					<div class="form-group" style="margin-bottom: 5px;">
 						<div class="input-group date" >
-							<input type="text" id="date_to" value ="{if $smarty.get.to}{$smarty.get.to|escape}{else}{$to_date}{/if}" class="form-control" name="to" placeholder="ទៅកាលបរិច្ឆេទបញ្ជាទិញ (Order Date To)" autocomplete="off"/>
+							<input type="text" id="date_to" value ="{if $smarty.get.to|default:''}{$smarty.get.to|default:''|escape}{else}{$to_date}{/if}" class="form-control" name="to" placeholder="ទៅកាលបរិច្ឆេទបញ្ជាទិញ (Order Date To)" autocomplete="off"/>
 							<span class="input-group-addon">
 								<span class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -28,7 +28,7 @@
 						<select name="customer_id" class="form-control select2">
 							<option value="">ជ្រើសរើសអតិថិជន(Select Customer)</option>
 							{foreach from=$list_customer_name item="customer"}
-								<option value="{$customer.id}" {if $smarty.get.customer_id|escape eq $customer.id}selected{/if}>{$customer.name} ({$customer.phone})</option>
+								<option value="{$customer.id}" {if $smarty.get.customer_id|default:''|escape eq $customer.id}selected{/if}>{$customer.name} ({$customer.phone})</option>
 							{/foreach}
 						</select>
 					</div>
@@ -55,7 +55,7 @@
 				{if $list_order_data|@count gt 0}
 				{foreach from=$list_order_data item=data name=foo}
 				<tr {if $smarty.foreach.foo.first}class="active"{/if}>
-				<td class="text-center">{if $smarty.get.next eq 1 OR $smarty.get.next eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next-1}{/if}</td>
+				<td class="text-center">{if $smarty.get.next|default:'' eq 1 OR $smarty.get.next|default:'' eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next|default:1-1}{/if}</td>
 				<td class="text-center" valign="top" width="140px;">
 					<a data-toggle="tooltip" data-original-title="View Order Information" class="btn btn-success btn-xs" href="{$index_file}?task=order_list_history&amp;action=view&amp;id={$data.id}">
 					<i class="glyphicon glyphicon-list"></i> លម្អិត (Detail)

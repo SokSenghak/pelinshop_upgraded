@@ -59,10 +59,10 @@
                         <form role="form" method="get" action="{$admin_file}?task=order_list" class="form-inline">
                             <input type="hidden" name="task" value="report_split_payment">
                             <input type="hidden" name="action" value="detail">
-                            <input type="hidden" name="cus_id" value="{$smarty.get.cus_id}">
+                            <input type="hidden" name="cus_id" value="{$smarty.get.cus_id|default:''|escape}">
                             <div class="form-group">
                                 <div class="input-group date">
-                                    <input type="text" id="order_date_from" value ="{$smarty.get.from|escape}" class="form-control" name="from" placeholder="កាលបរិច្ឆេទបញ្ជាទិញពី (Order Date From)" autocomplete="off" />
+                                    <input type="text" id="order_date_from" value ="{$smarty.get.from|default:''|escape}" class="form-control" name="from" placeholder="កាលបរិច្ឆេទបញ្ជាទិញពី (Order Date From)" autocomplete="off" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -70,7 +70,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="input-group date" >
-                                    <input type="text" id="order_date_to" value ="{$smarty.get.to|escape}" class="form-control" name="to" placeholder="ទៅកាលបរិច្ឆេទបញ្ជាទិញ (Order Date To)" autocomplete="off" />
+                                    <input type="text" id="order_date_to" value ="{$smarty.get.to|default:''|escape}" class="form-control" name="to" placeholder="ទៅកាលបរិច្ឆេទបញ្ជាទិញ (Order Date To)" autocomplete="off" />
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -80,14 +80,14 @@
                                 <select name="branch" class="form-control">
                                 <option value="">ជ្រើសរើសសាខា (Select Branch)</option>
                                 {foreach from=$list_branch_name item="branch"}
-                                <option value="{$branch.id}" {if $smarty.get.branch|escape eq $branch.id}selected{/if}>{$branch.name}</option>
+                                <option value="{$branch.id}" {if $smarty.get.branch|default:''|escape eq $branch.id}selected{/if}>{$branch.name}</option>
                                 {/foreach}
                                 </select>
                             </div>
                             <div class="form-group">
                                 <button class="btn btn-success" type="submit"><li class="glyphicon glyphicon-search"></li></button>
                                 {if $check_search eq 1}
-                                <a href="{$admin_file}?task=report_split_payment&amp;action=print&amp;cus_id={$smarty.get.cus_id}&amp;from={$smarty.get.from}&amp;to={$smarty.get.to}&amp;branch={$smarty.get.branch}" class="btn btn-primary" target="_blank">
+                                <a href="{$admin_file}?task=report_split_payment&amp;action=print&amp;cus_id={$smarty.get.cus_id|default:''|escape}&amp;from={$smarty.get.from|default:''|escape}&amp;to={$smarty.get.to|default:''|escape}&amp;branch={$smarty.get.branch|default:''|escape}" class="btn btn-primary" target="_blank">
                                     <li class="glyphicon glyphicon-search"></li> បោះពុម្ពរបាយការណ៍ (Print Report)
                                 </a>
                                 {else}

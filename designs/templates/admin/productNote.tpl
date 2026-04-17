@@ -16,7 +16,7 @@
             <form class="form-horizontal" role="form" method="get" action="admin.php">
                 <input type="hidden" name="task" value="product_note">
                 <div class="input-group">
-                    <input type="text" name="imei" value="{if $smarty.get.imei}{$smarty.get.imei}{/if}" id="search_imei"
+                    <input type="text" name="imei" value="{if $smarty.get.imei|default:''}{$smarty.get.imei|default:''|escape}{/if}" id="search_imei"
                         class="form-control" placeholder="ស្វែងរកតាមរយៈលេខ IMEI (Type for search by imei)" autofocus>
                     <span class="input-group-btn">
                         <button class="btn btn-success" type="submit" id="btn_by_imei">
@@ -72,34 +72,34 @@
                             </thead>
                             <tbody>
                                 <tr id="product_list" style="background-color: rgb(218, 165, 32);">
-                                    <td>{$list_imei_data.imei}</td>
-                                    <td>{$list_imei_data.title}</td>
-                                    <td>{$list_imei_data.company_title}</td>
-                                    <td>{$list_imei_data.maker_name} </td>
-                                    <td>{$list_imei_data.brand_name}</td>
-                                    <td>{$list_imei_data.price}</td>
-                                    <td>{$list_imei_data.storage_name}</td>
-                                    <td>{$list_imei_data.description}</td>
-                                    <td>{$list_imei_data.pro_date_in}</td>
+                                    <td>{$list_imei_data.imei|default:''}</td>
+                                    <td>{$list_imei_data.title|default:''}</td>
+                                    <td>{$list_imei_data.company_title|default:''}</td>
+                                    <td>{$list_imei_data.maker_name|default:''} </td>
+                                    <td>{$list_imei_data.brand_name|default:''}</td>
+                                    <td>{$list_imei_data.price|default:''}</td>
+                                    <td>{$list_imei_data.storage_name|default:''}</td>
+                                    <td>{$list_imei_data.description|default:''}</td>
+                                    <td>{$list_imei_data.pro_date_in|default:''}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            {if $list_imei_data.imei ne null}
+            {if $list_imei_data.imei|default:null ne null}
             <div class="row box-custom">
                 <div class="col-md-12">
-                     <form class="form-horizontal" role="form" method="post" action="{$admin_file}?task=product_note&amp;imei={$smarty.get.imei}&amp;action=add_pro_note">
-                        <input type="hidden" name="note_id" value="{$edit_note.id}">
+                     <form class="form-horizontal" role="form" method="post" action="{$admin_file}?task=product_note&amp;imei={$smarty.get.imei|default:''|escape}&amp;action=add_pro_note">
+                        <input type="hidden" name="note_id" value="{$edit_note.id|default:''}">
                         <div class="row">
                             <div class="col-md-12" style='padding:15px'>
                                 <label for="problam">ចំនុចបញ្ហា (Note):<span style="color:red">*</span></label>
-                                <input type="hidden" name="order_id" id="order_id" value="{if $list_orderItem_data.id}{$list_orderItem_data.id}{/if}">
-                                <input type="hidden" name="imei" id="imei" value="{if $list_imei_data.imei}{$list_imei_data.imei}{/if}">
+                                <input type="hidden" name="order_id" id="order_id" value="{if $list_orderItem_data.id|default:''}{$list_orderItem_data.id|default:''}{/if}">
+                                <input type="hidden" name="imei" id="imei" value="{if $list_imei_data.imei|default:''}{$list_imei_data.imei|default:''}{/if}">
                                 <div class="input-group" style="width: 100%">
                                     <select id="searchnote" class="form-control font_siemreap" name="note">
-                                        <option>{if $edit_note.note}{$edit_note.note}{/if}</option>
+                                        <option>{if $edit_note.note|default:''}{$edit_note.note|default:''}{/if}</option>
                                     </select>
                                     {* <input type="text" name="note" class="form-control" placeholder="បញ្ចូលបញ្ហាទូរស័ព្ទ (Enter error phone)"> *}
                                 </div>
@@ -108,7 +108,7 @@
                         <div class="row" style='padding:15px'>
                             <div class="form-group">
                                 <label for="comment">ចំណាំ (Note):<span style="color:red">*</span></label>
-                                <textarea name="note_detail" class="form-control" rows="4" id="note_detail"> {if $edit_note.note_detail}{$edit_note.note_detail} {/if}</textarea>
+                                <textarea name="note_detail" class="form-control" rows="4" id="note_detail"> {if $edit_note.note_detail|default:''}{$edit_note.note_detail|default:''}{/if}</textarea>
                             </div>
                         </div>
                         <div class="row" style='padding:15px'>
@@ -121,7 +121,7 @@
                 </div>
             </div>
             <br>
-            {if $smarty.get.error eq 1}
+            {if $smarty.get.error|default:'' eq 1}
                 <div class="alert alert-danger alert-dismissible">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                     <strong>IMEI!</strong> ផលិតផលមានរួចហើយ ឬមានបញ្ហា។ (Product imei have existed or have sth problems.)
@@ -143,7 +143,7 @@
                     <tbody id="note_list">
                         {foreach from=$list_pronote_data item=pronote}
                             <tr>
-                                <td>{$list_imei_data.imei}</td>
+                                <td>{$list_imei_data.imei|default:''}</td>
                                 {* <td colspan="3" class="text-center">There are no record.</td> *}
                                 <td>{$pronote.note}</td>
                                 <td class='text-center'>
@@ -158,7 +158,7 @@
                                 <td>{$pronote.imei_old}~{$pronote.imei_change}</td>
                                 <td>
                                     {if $pronote.status eq 1}
-                                        <a href="{$admin_file}?task=product_note&amp;imei={$smarty.get.imei}&amp;edit_note_id={$pronote.id}"
+                                        <a href="{$admin_file}?task=product_note&amp;imei={$smarty.get.imei|default:''|escape}&amp;edit_note_id={$pronote.id}"
                                         class="btn btn-info btn-sm"><span class='fa fa-pencil'></span></a>
                                     {else}
                                         <button type='button' class='btn radius-50 btn-info btn-sm' disabled><i
@@ -183,7 +183,7 @@
                                                 <div class="modal-body">តើអ្នកពិតជាចង់លុបលេខ IMEI របស់ផលិតផលនេះ (Are you sure want to delete this product IMEI number) <label class="label label-danger">{$data.imei}</label> ? </div>
                                                 <div class="modal-footer">
                                                 <button type="button" class="btn btn-xs btn-default" data-dismiss="modal">　បោះបង់ (Cancel) </button>
-                                                <a href="admin.php?task=product_note&amp;action=delete_pro_note&amp;imei={$smarty.get.imei}&amp;note_id={$pronote.id}" class="btn btn-xs btn-danger">&nbsp;លុប (Delete)</a>
+                                                <a href="admin.php?task=product_note&amp;action=delete_pro_note&amp;imei={$smarty.get.imei|default:''|escape}&amp;note_id={$pronote.id}" class="btn btn-xs btn-danger">&nbsp;លុប (Delete)</a>
                                                 {* <a class="btn btn-xs btn-danger" href="{$admin_file}?task=product_note&amp;imei={$smarty.get.imei}&amp;action=delete&amp;id={$pronote.id}">　លុប (Delete)</a> *}
                                                 </div>
                                             </div>
@@ -200,7 +200,7 @@
                                                     <h3 class="panel-title modal-title">ផ្លាស់ប្ដូរផលិតផល (Change Product)</h3>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form class="form" data-toggle="validator" id="changeProduct" action="admin.php?task=product_note&action=change&amp;imei={$smarty.get.imei}&amp;note_id={$pronote.id}" method="post">
+                                                    <form class="form" data-toggle="validator" id="changeProduct" action="admin.php?task=product_note&action=change&amp;imei={$smarty.get.imei|default:''|escape}&amp;note_id={$pronote.id}" method="post">
                                                         <div class="row">
                                                             <div class="col-md-12" style="margin-bottom:5px">
                                                                 <div class="input-group">
@@ -275,7 +275,7 @@
                                                     <button type="button" class="btn btn-xs btn-default"
                                                         data-dismiss="modal">　បោះបង់
                                                         (Cancel) </button>
-                                                    <a href="admin.php?task=product_note&action=return&amp;imei={$smarty.get.imei}&amp;note_id={$pronote.id}" class="btn btn-xs btn-danger" id="btn_agree"><i
+                                                    <a href="admin.php?task=product_note&action=return&amp;imei={$smarty.get.imei|default:''|escape}&amp;note_id={$pronote.id}" class="btn btn-xs btn-danger" id="btn_agree"><i
                                                             class="glyphicon glyphicon-ok"></i>&nbsp;យល់ព្រម (Agree)</a>
                                                 </div>
                                             </div>

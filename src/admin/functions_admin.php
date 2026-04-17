@@ -318,7 +318,7 @@ function getInvoicePaymentByCustomer($cus_id, $from, $to, $branch, $slimit)
 function reportProductHistoryNoCutting($branch_id, $pr_st_id, $from, $to, $slimit=30)
 {
 	global $debug, $connected, $total_data, $offset, $limit;
-	$result = true;
+	$result = [];
 	try {
 		if(!empty($slimit)) $limit = $slimit;
 		$condition = $where = '';
@@ -422,7 +422,8 @@ function reportProductHistoryNoCutting($branch_id, $pr_st_id, $from, $to, $slimi
 		
 		return $newResult;
 	} catch(PDOException $e) {
-		$result = false;
+		$result = [];
+		$total_data = 0;
 		if($debug)  echo 'Function reportSummaryProduct Errors: '.$e->getMessage();
 	}
 
@@ -432,7 +433,7 @@ function reportProductHistoryNoCutting($branch_id, $pr_st_id, $from, $to, $slimi
 function sumStockNoCutting($from, $to, $company_title, $storage_id, $color_id, $maker_id, $status)
 {
   global $debug, $connected;
-  $result = 0;
+  $result = ['total' => 0, 'total_stock' => 0];
   try {
     $sqltotal = ' SELECT COUNT(*) AS total , IFNULL(SUM(ap.stock), 0) AS total_stock FROM `product` p  
                     INNER JOIN activity_product ap ON ap.product_id = p.id
@@ -452,15 +453,16 @@ function sumStockNoCutting($from, $to, $company_title, $storage_id, $color_id, $
     $result = $stmt_sqltotal->fetch();
     return $result;
   } catch (\Throwable $e) {
-    $result = false;
+    $result = ['total' => 0, 'total_stock' => 0];
 		if($debug)  echo 'Function sumStockNoCutting Errors: '.$e->getMessage();
   }
+  return $result;
 }
 
 function reportProductHistory($branch_id, $pr_st_id, $from, $to, $slimit=30)
 {
 	global $debug, $connected, $total_data, $offset, $limit;
-	$result = true;
+	$result = [];
 	try {
 		if(!empty($slimit)) $limit = $slimit;
 		$condition = $where = '';
@@ -570,7 +572,8 @@ function reportProductHistory($branch_id, $pr_st_id, $from, $to, $slimit=30)
 
 		return $newResult;
 	} catch(PDOException $e) {
-		$result = false;
+		$result = [];
+		$total_data = 0;
 		if($debug)  echo 'Function reportSummaryProduct Errors: '.$e->getMessage();
 	}
 
@@ -968,7 +971,7 @@ function getTotalValInternalInvoice($cus_id, $int_in_id)
 function getTotal()
 {
     global $debug, $connected;
-  $result = true;
+  $result = ['total' => 0];
   try
   {
     $sql = ' SELECT SUM(total - total_payment) AS total FROM `order` WHERE status = 1 ';
@@ -980,7 +983,7 @@ function getTotal()
   }
   catch (Exception $e)
   {
-    $result = false;
+    $result = ['total' => 0];
     if ($debug)
     {
       echo 'ERROR: getTotal ' . $e->getMessage();
@@ -991,7 +994,7 @@ function getTotal()
 }
 function getOrderListPrintDataByCustomer($kwd = '', $from = '', $to = '', $customer_id = '', $status = '') {
   global $debug, $connected, $total_data, $offset, $limit;
-  $result = true;
+  $result = [];
   try {
     //Create search condition
     $condition = $where = '';
@@ -1076,7 +1079,8 @@ function getOrderListPrintDataByCustomer($kwd = '', $from = '', $to = '', $custo
   }
   catch(PDOException $e)
   {
-    $result = false;
+    $result = [];
+    $total_data = 0;
     if ($debug)
     {
       echo 'ERROR: getOrderListPrintDataByCustomer ' . $e->getMessage();
@@ -1088,7 +1092,7 @@ function getOrderListPrintDataByCustomer($kwd = '', $from = '', $to = '', $custo
 }
 function getOrderListDataByCustomer($kwd = '', $from = '', $to = '', $customer_id = '', $status = '', $slimit='') {
   global $debug, $connected, $total_data, $offset, $limit;
-  $result = true;
+  $result = [];
   if(!empty($slimit)) $limit = $slimit;
   try {
     //Create search condition
@@ -1182,7 +1186,8 @@ function getOrderListDataByCustomer($kwd = '', $from = '', $to = '', $customer_i
   }
   catch(PDOException $e)
   {
-    $result = false;
+    $result = [];
+    $total_data = 0;
     if ($debug)
     {
       echo 'ERROR: getOrderListDataByCustomer ' . $e->getMessage();
@@ -1949,7 +1954,7 @@ function getListProductHistory($kwd = '', $branch_id = '', $maker = '', $brand =
 
 function getListProduct($kwd = '', $branch_id = '', $maker = '', $brand = '', $pro_id, $num_blank, $slimit = '', $pr_st_id, $from, $to, $is_cutting) {
   global $debug, $connected, $total_data, $offset, $limit;
-  $result = true;
+  $result = [];
   if(!empty($slimit))
   {
     $limit = $slimit;
@@ -2037,7 +2042,8 @@ function getListProduct($kwd = '', $branch_id = '', $maker = '', $brand = '', $p
 
     return $newResult;
   } catch(PDOException $e) {
-    $result = false;
+    $result = [];
+    $total_data = 0;
     if($debug)  echo 'Function getListName Errors: '.$e->getMessage();
   }
   return $result;

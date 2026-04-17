@@ -16,10 +16,10 @@
               <div class="col-md-6">
                 <div class="input-group" style="padding-bottom:10px;">
                 <span class="input-group-addon">កាលបរិច្ឆេទ (Date)</span>
-                  <input type="text" id="order_from" value ="{if $smarty.get.order_from}{$smarty.get.order_from|escape}{elseif $order_from}{$order_from}{/if}"
+                  <input type="text" id="order_from" value ="{if $smarty.get.order_from|default:''}{$smarty.get.order_from|default:''|escape}{elseif $order_from}{$order_from}{/if}"
                     class="form-control" name="order_from" placeholder="2016-08-01"/>
                     <span class="input-group-addon">ទៅ (To)</span>
-                  <input type="text" id="order_to" value ="{$smarty.get.order_to|escape}" class="form-control"
+                  <input type="text" id="order_to" value ="{$smarty.get.order_to|default:''|escape}" class="form-control"
                     name="order_to" placeholder="2016-08-30" />
                 </div>
               </div>
@@ -29,7 +29,7 @@
                   <select name="brd" class="form-control">
                       <option value="">---ជ្រើសរើសម៉ាកផលិតផល (Select Brand)---</option>
                     {foreach from=$list_brand_name item="brand"}
-                      <option value="{$brand.id}" {if $smarty.get.brd|escape eq $brand.id}selected{/if}>{$brand.name}</option>
+                      <option value="{$brand.id}" {if $smarty.get.brd|default:''|escape eq $brand.id}selected{/if}>{$brand.name}</option>
                     {/foreach}
                   </select>
                 </div>
@@ -40,17 +40,17 @@
                   <select name="branch" class="form-control">
                       <option value="">---ជ្រើសរើសសាខា (Select Branch)---</option>
                       {foreach from=$list_branch_name item="branch"}
-                        <option value="{$branch.id}" {if $smarty.get.branch|escape eq $branch.id}selected{/if}>{$branch.name}</option>
+                        <option value="{$branch.id}" {if $smarty.get.branch|default:''|escape eq $branch.id}selected{/if}>{$branch.name}</option>
                       {/foreach}
                   </select>
                 </div>
               </div>
               <div class="col-md-2">
-                <label class="checkbox-inline"><input type="checkbox" name="summary" value="1" {if $smarty.get.summary eq 1}checked{/if}>មើល (View)</label>&nbsp;&nbsp;
+                <label class="checkbox-inline"><input type="checkbox" name="summary" value="1" {if $smarty.get.summary|default:'' eq 1}checked{/if}>មើល (View)</label>&nbsp;&nbsp;
                 <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-search"></i>&nbsp;ស្វែងរក (Search)</button>
               </div>
               <div class="col-md-3">
-                <a target="_blank" class="btn btn-primary" href="{$admin_file}?task=product_stock&amp;action=product_stock_show&amp;order_from={$smarty.get.order_from|escape}&amp;order_to={$smarty.get.order_to|escape}&amp;brd={$smarty.get.brd|escape}&amp;branch={$smarty.get.branch|escape}&amp;summary={$smarty.get.summary|escape}">
+                <a target="_blank" class="btn btn-primary" href="{$admin_file}?task=product_stock&amp;action=product_stock_show&amp;order_from={$smarty.get.order_from|default:''|escape}&amp;order_to={$smarty.get.order_to|default:''|escape}&amp;brd={$smarty.get.brd|default:''|escape}&amp;branch={$smarty.get.branch|default:''|escape}&amp;summary={$smarty.get.summary|default:''|escape}">
                   <i class="glyphicon glyphicon-print"></i>&nbsp;បោះពុម្ពរបាយការណ៍ (Print Report)</a>
               </div>
             </div>
@@ -60,7 +60,7 @@
       </div>
 
       <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover" {if $smarty.get.summary eq 1}style="display:none;"{/if}>
+        <table class="table table-bordered table-striped table-hover" {if $smarty.get.summary|default:'' eq 1}style="display:none;"{/if}>
             <thead>
               <tr class="table_header">
                 <th></th>
@@ -81,7 +81,7 @@
               {if $product_stock_report_data|@count gt 0}
               {foreach from=$product_stock_report_data item=data name=foo}
                 <tr>
-                  <td class="text-center">{if $smarty.get.next eq 1 OR $smarty.get.next eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next-1}{/if}</td>
+                  <td class="text-center">{if $smarty.get.next|default:'' eq 1 OR $smarty.get.next|default:'' eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next|default:1-1}{/if}</td>
                   <td class="text-center" valign="top" width="140px;"><span class="badge_pelin">{$data.imei}</span></td>
                   <td class="text-center">{$data.title}
                     {if $data.color_name}-{$data.color_name}{/if}
@@ -104,7 +104,7 @@
               {if $product_stock_report_data_branch|@count gt 0}
               {foreach from=$product_stock_report_data_branch item=data name=foo}
                 <tr>
-                  <td class="text-center">{if $smarty.get.next eq 1 OR $smarty.get.next eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next-1}{/if}</td>
+                  <td class="text-center">{if $smarty.get.next|default:'' eq 1 OR $smarty.get.next|default:'' eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next|default:1-1}{/if}</td>
                   <td class="text-center" valign="top" width="140px;"><span class="badge_pelin">{$data.imei}</span></td>
                   <td class="text-center">{$data.title}
                     {if $data.color_name}-{$data.color_name}{/if}

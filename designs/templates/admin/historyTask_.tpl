@@ -12,7 +12,7 @@
         <form role="form" method="get" action="{$admin_file}?task=history" class="form-horizontal">
           <input type="hidden" name="task" value="history">
           <div class="input-group">
-            <input type="text" name="kwd" value="{$smarty.get.kwd}" class="form-control" placeholder="Search for..." autofocus>
+            <input type="text" name="kwd" value="{$smarty.get.kwd|default:''|escape}" class="form-control" placeholder="Search for..." autofocus>
           <span class="input-group-btn">
             <button class="btn btn-success" type="submit"><li class="glyphicon glyphicon-search"></li></button>
           </span>
@@ -92,7 +92,7 @@
           <form role="form" method="get" action="{$admin_file}?task=history" class="form-horizontal">
             <input type="hidden" name="task" value="history">
             <div class="input-group">
-              <input type="text" name="kwd" value="{$smarty.get.kwd}" class="form-control" placeholder="Search for..." autofocus>
+              <input type="text" name="kwd" value="{$smarty.get.kwd|default:''|escape}" class="form-control" placeholder="Search for..." autofocus>
             <span class="input-group-btn">
               <button class="btn btn-success" type="submit"><li class="glyphicon glyphicon-search"></li></button>
             </span>

@@ -57,7 +57,7 @@
               {if $summary_stock_data|@count gt 0}
               {foreach from=$summary_stock_data item=data name=foo}
                 <tr>
-                  <td class="text-center">{if $smarty.get.next eq 1 OR $smarty.get.next eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next-1}{/if}</td>
+                  <td class="text-center">{if $smarty.get.next|default:'' eq 1 OR $smarty.get.next|default:'' eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next|default:1-1}{/if}</td>
                   <!-- <td class="text-center">{$data.branch_name}</td> -->
                   <td class="text-center">{$data.brand_name}</td>
                   <td class="text-center">{$data.inStockYesterday}</td>

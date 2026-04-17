@@ -24,6 +24,8 @@ $smarty_appform = new SHOP_SMARTY();
 $smarty_appform->assign('smpaginate',  'common/paginate.tpl');
 $smarty_appform->assign('mode',        'admin');
 $smarty_appform->assign('admin_file',  $admin_file);
+$smarty_appform->assign('admin_file_name', $admin_file);
+$smarty_appform->assign('index_file',  $admin_file);
 $smarty_appform->assign('shop_site',   $shop_site);
 
 // ─── Pagination ───────────────────────────────────────────────────────────────

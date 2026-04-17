@@ -26,6 +26,7 @@ $kwd    = !empty($_GET['kwd'])    ? $_GET['kwd']    : null;
 // ─── Smarty ───────────────────────────────────────────────────────────────────
 $smarty_appform = new SHOP_SMARTY();
 $smarty_appform->assign('smpaginate',  'common/paginate.tpl');
+$smarty_appform->assign('admin_file',  $order_file);
 $smarty_appform->assign('index_file',  $index_file);
 $smarty_appform->assign('shop_site',   $shop_site);
 $smarty_appform->assign('order_file',  $order_file);

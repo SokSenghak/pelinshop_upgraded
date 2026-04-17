@@ -17,12 +17,12 @@
                   <select name="customer_id" class="form-control select2">
                       <option value="">ជ្រើសរើសអតិថិជន(Select Customer)</option>
                       {foreach from=$list_customer_name item="customer"}
-                        <option value="{$customer.id}" {if $smarty.get.customer_id|escape eq $customer.id}selected{/if}>{$customer.name} ({$customer.phone})</option>
+                        <option value="{$customer.id}" {if $smarty.get.customer_id|default:''|escape eq $customer.id}selected{/if}>{$customer.name} ({$customer.phone})</option>
                       {/foreach}
                   </select>
               </div>
               <div class="input-group">
-                <input type="text" value="{$smarty.get.kwd|escape}" name="kwd" class="form-control" placeholder="ស្វែងរក (Search for...)" autofocus>
+                <input type="text" value="{$smarty.get.kwd|default:''|escape}" name="kwd" class="form-control" placeholder="ស្វែងរក (Search for...)" autofocus>
                 <span class="input-group-btn">
                   <button class="btn btn-success" type="submit"><li class="glyphicon glyphicon-search"></li></button>
                 </span>

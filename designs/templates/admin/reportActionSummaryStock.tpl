@@ -19,7 +19,7 @@
                   <select name="brch" class="form-control">
                       <option value="">---ជ្រើសរើសសាខា (Select Branch)---</option>
                       {foreach from=$list_branch_name item="branch"}
-                        <option value="{$branch.id}" {if $smarty.get.brch|escape eq $branch.id OR $brch_id eq 2}selected{/if}>{$branch.name}</option>
+                        <option value="{$branch.id}" {if $smarty.get.brch|default:''|escape eq $branch.id OR $brch_id eq 2}selected{/if}>{$branch.name}</option>
                       {/foreach}
                   </select>
                 </div>
@@ -30,14 +30,14 @@
                   <select name="brd" class="form-control">
                       <option value="">---ជ្រើសរើសសាខា (Select Brand)---</option>
                     {foreach from=$list_brand_name item="brand"}
-                      <option value="{$brand.id}" {if $smarty.get.brd eq $brand.id}selected{/if}>{$brand.name}</option>
+                      <option value="{$brand.id}" {if $smarty.get.brd|default:'' eq $brand.id}selected{/if}>{$brand.name}</option>
                     {/foreach}
                   </select>
                 </div>
               </div>
               <div class="col-md-3">
                 <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-search"></i>&nbsp;ស្វែងរក (Search)</button>
-                <a target="_blank" class="btn btn-primary {if $summary_stock_data|@count eq 0} disabled{/if}" href="{$admin_file}?task=summary_stock&amp;action=summary_stock_show&amp;brch={if $smarty.get.brch}{$smarty.get.brch|escape}{else}{$brch_id}{/if}&amp;brd={$smarty.get.brd}">
+                <a target="_blank" class="btn btn-primary {if $summary_stock_data|@count eq 0} disabled{/if}" href="{$admin_file}?task=summary_stock&amp;action=summary_stock_show&amp;brch={if $smarty.get.brch|default:''}{$smarty.get.brch|default:''|escape}{else}{$brch_id}{/if}&amp;brd={$smarty.get.brd|default:''|escape}">
                   <i class="glyphicon glyphicon-print"></i>&nbsp;បោះពុម្ពរបាយការណ៍ (Print Report)</a>
               </div>
             </div>
@@ -61,7 +61,7 @@
               {if $summary_stock_data|@count gt 0}
               {foreach from=$summary_stock_data item=data name=foo}
                 <tr>
-                  <td class="text-center">{if $smarty.get.next eq 1 OR $smarty.get.next eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next-1}{/if}</td>
+                  <td class="text-center">{if $smarty.get.next|default:'' eq 1 OR $smarty.get.next|default:'' eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next|default:1-1}{/if}</td>
                   <!-- <td class="text-center">{$data.branch_name}</td> -->
                   <td class="text-center" valign="top" width="140px;"><span class="badge_pelin">{$data.brand_name}</span></td>
                   <td class="text-center">{$data.inStockYesterday}</td>

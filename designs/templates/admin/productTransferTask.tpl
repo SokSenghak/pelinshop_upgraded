@@ -21,7 +21,7 @@
                 <select name="maker" class="form-control">
                   <option value="">---Choose Product Maker---</option>
                   {foreach from=$list_maker_name item=maker}
-                    <option value="{$maker.id}" {if $smarty.get.maker eq $maker.id}selected{/if}>{$maker.name}</option>
+                    <option value="{$maker.id}" {if $smarty.get.maker|default:'' eq $maker.id}selected{/if}>{$maker.name}</option>
                   {/foreach}
                 </select>
               </div>
@@ -29,13 +29,13 @@
                 <select name="brand" class="form-control">
                   <option value="">---Choose Brand Name---</option>
                   {foreach from=$list_brand_name item=brand}
-                    <option value="{$brand.id}" {if $smarty.get.brand eq $brand.id}selected{/if}>{$brand.name}</option>
+                    <option value="{$brand.id}" {if $smarty.get.brand|default:'' eq $brand.id}selected{/if}>{$brand.name}</option>
                   {/foreach}
                 </select>
               </div>
               <div class="form-group">
                 <div class="input-group">
-                  <input type="text" value="{$smarty.get.kwd|escape}" name="kwd" class="form-control" placeholder="Search by IMEI Number or Title" autofocus>
+                  <input type="text" value="{$smarty.get.kwd|default:''|escape}" name="kwd" class="form-control" placeholder="Search by IMEI Number or Title" autofocus>
                     <span class="input-group-btn">
                       <button class="btn btn-success" type="submit"><li class="glyphicon glyphicon-search"></li>Search</button>
                   </span>

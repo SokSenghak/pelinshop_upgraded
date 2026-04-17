@@ -45,7 +45,7 @@
             {foreach from=$list_order_data item=data}
             <tbody>
               <tr>
-                <td class="text-center">{if $smarty.get.next eq 1 OR $smarty.get.next eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next-1}{/if}</td>
+                <td class="text-center">{if $smarty.get.next|default:'' eq 1 OR $smarty.get.next|default:'' eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next|default:1-1}{/if}</td>
                 <td><a data-toggle="tooltip" data-original-title="View Order Information" class="btn btn-success btn-xs" href="{$index_file}?task=order_list&amp;action=view&amp;id={$data.id}">
                   <i class="glyphicon glyphicon-list"></i> លម្អិត (Detail)
                 </a></td>

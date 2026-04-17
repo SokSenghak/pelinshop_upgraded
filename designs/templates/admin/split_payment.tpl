@@ -73,9 +73,9 @@
 				 <div class="row">
           			<div class="col-md-12">
                         {if $edit_data.id}
-                            <form action="{$admin_file}?task=internal_invoice&amp;action=split_payment&invoice_id={$edit_data.id}&cus_id={$smarty.get.cus_id}&amp;int_in_id={$smarty.get.int_in_id}" method="post">
+                            <form action="{$admin_file}?task=internal_invoice&amp;action=split_payment&invoice_id={$edit_data.id}&cus_id={$smarty.get.cus_id|default:''|escape}&amp;int_in_id={$smarty.get.int_in_id|default:''|escape}" method="post">
                         {else}
-                            <form action="{$admin_file}?task=internal_invoice&amp;action=split_payment&cus_id={$smarty.get.cus_id}&amp;int_in_id={$smarty.get.int_in_id}" method="post">
+                            <form action="{$admin_file}?task=internal_invoice&amp;action=split_payment&cus_id={$smarty.get.cus_id|default:''|escape}&amp;int_in_id={$smarty.get.int_in_id|default:''|escape}" method="post">
                         {/if}
 					  		<div class="row">
           						<div class="col-md-6">
@@ -161,7 +161,7 @@
                                                 <div class="modal-body">តើអ្នកពិតជាចង់លុបទិន្នន័យនេះមែនទេ (Are you sure want to delete) ? </div>
                                                 <div class="modal-footer">
                                                 <button type="button" class="btn btn-xs btn-default" data-dismiss="modal">　បោះបង់ (Cancel) </button>
-                                                <a class="btn btn-xs btn-danger" href="{$admin_file}?task=internal_invoice&amp;action=delete&amp;id={$show.id}&cus_id={$show.customer_id}&amp;int_in_id={$smarty.get.int_in_id}">　លុប (Delete)</a>
+                                                <a class="btn btn-xs btn-danger" href="{$admin_file}?task=internal_invoice&amp;action=delete&amp;id={$show.id}&cus_id={$show.customer_id}&amp;int_in_id={$smarty.get.int_in_id|default:''|escape}">　លុប (Delete)</a>
                                                 </div>
                                             </div>
                                             </div>

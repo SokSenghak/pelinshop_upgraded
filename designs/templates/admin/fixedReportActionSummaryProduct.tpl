@@ -15,17 +15,17 @@
                     <div class="col-md-6">
                     <div class="input-group" style="padding-bottom:10px;">
                         <span class="input-group-addon">កាលបរិច្ជេទធ្វើ (Date Create)</span>
-                        <input type="text" name="c_from_fixed" id="c_from_fixed"  value="{if $smarty.get.c_from_fixed}{$smarty.get.c_from_fixed|escape}{elseif $c_from_fixed}{$c_from_fixed}{/if}" class="form-control" placeholder="2016-08-01" />
+                        <input type="text" name="c_from_fixed" id="c_from_fixed"  value="{if $smarty.get.c_from_fixed|default:''}{$smarty.get.c_from_fixed|default:''|escape}{elseif $c_from_fixed}{$c_from_fixed}{/if}" class="form-control" placeholder="2016-08-01" />
                         <span class="input-group-addon">ទៅ (To)</span>
-                        <input type="text" name="c_to_fixed" id="c_to_fixed" value="{if $smarty.get.c_to_fixed}{$smarty.get.c_to_fixed|escape}{elseif $c_to_fixed}{$c_to_fixed}{/if}" class="form-control" placeholder="2016-08-30" />
+                        <input type="text" name="c_to_fixed" id="c_to_fixed" value="{if $smarty.get.c_to_fixed|default:''}{$smarty.get.c_to_fixed|default:''|escape}{elseif $c_to_fixed}{$c_to_fixed}{/if}" class="form-control" placeholder="2016-08-30" />
                     </div>
                     </div>
                     <div class="col-md-6">
                     <div class="input-group" style="padding-bottom:10px;">
                         <span class="input-group-addon">កាលបរិច្ជេទទទួល (Date​ Receive)</span>
-                        <input type="text" name="from_fixed" id="from_fixed"  value="{if $smarty.get.from_fixed}{$smarty.get.from_fixed|escape}{elseif $from_fixed}{$from_fixed}{/if}" class="form-control" placeholder="2016-08-01" />
+                        <input type="text" name="from_fixed" id="from_fixed"  value="{if $smarty.get.from_fixed|default:''}{$smarty.get.from_fixed|default:''|escape}{elseif $from_fixed}{$from_fixed}{/if}" class="form-control" placeholder="2016-08-01" />
                         <span class="input-group-addon">ទៅ (To)</span>
-                        <input type="text" name="to_fixed" id="to_fixed" value="{if $smarty.get.to_fixed}{$smarty.get.to_fixed|escape}{elseif $to_fixed}{$to_fixed}{/if}" class="form-control" placeholder="2016-08-30" />
+                        <input type="text" name="to_fixed" id="to_fixed" value="{if $smarty.get.to_fixed|default:''}{$smarty.get.to_fixed|default:''|escape}{elseif $to_fixed}{$to_fixed}{/if}" class="form-control" placeholder="2016-08-30" />
                     </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                     <div class="col-md-6">
                     <div class="input-group" style="padding-bottom:10px;">
                         <span class="input-group-addon">លេខIMEI (IMEI)</span>
-                        <input type="text" name="kwd" value="{$smarty.get.kwd|escape}" id="kwd" class="form-control" placeholder="ស្វែងរកតាមរយៈលេខ IMEI (Type for search by imei)" autofocus>
+                        <input type="text" name="kwd" value="{$smarty.get.kwd|default:''|escape}" id="kwd" class="form-control" placeholder="ស្វែងរកតាមរយៈលេខ IMEI (Type for search by imei)" autofocus>
                     </div>
                     </div>
                     <div class="col-md-2">

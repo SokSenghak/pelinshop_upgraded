@@ -15,7 +15,7 @@
 							<input type="hidden" name="task" value="product_order">
 							<div class="form-group">
 								<div class="input-group date">
-									<input type="text" value="{$smarty.get.from|escape}" id="order_date_from" class="form-control" name="from" placeholder="ពីកាលបរិច្ឆេទលក់ (From Date of Sale)"/>
+									<input type="text" value="{$smarty.get.from|default:''|escape}" id="order_date_from" class="form-control" name="from" placeholder="ពីកាលបរិច្ឆេទលក់ (From Date of Sale)"/>
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
@@ -23,14 +23,14 @@
 							</div>
 							<div class="form-group">
 								<div class="input-group date">
-									<input type="text" value="{$smarty.get.to|escape}"  id="order_date_to" class="form-control" name="to" placeholder="ទៅកាលបរិច្ឆេទលក់ (To Date of Sale)" />
+									<input type="text" value="{$smarty.get.to|default:''|escape}"  id="order_date_to" class="form-control" name="to" placeholder="ទៅកាលបរិច្ឆេទលក់ (To Date of Sale)" />
 									<span class="input-group-addon">
 										<span class="glyphicon glyphicon-calendar"></span>
 									</span>
 								</div>
 							</div>
 							<div class="input-group">
-								<input type="text" value="{$smarty.get.kwd|escape}" name="kwd" class="form-control" placeholder="ស្វែងរក (Search for)..." autofocus>
+								<input type="text" value="{$smarty.get.kwd|default:''|escape}" name="kwd" class="form-control" placeholder="ស្វែងរក (Search for)..." autofocus>
 								<span class="input-group-btn">
 									<button class="btn btn-success" type="submit"><li class="glyphicon glyphicon-search"></li></button>
 								</span>

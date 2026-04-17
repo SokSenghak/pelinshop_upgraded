@@ -243,13 +243,13 @@ class SmartyPaginate
         return $_SESSION['SmartyPaginate'][$id]['page_limit'] ?? null;
     }
 
-    protected static function _getPrevPageItem(string $id = 'default'): int|false
+    public static function _getPrevPageItem(string $id = 'default'): int|false
     {
         $_prev_item = $_SESSION['SmartyPaginate'][$id]['current_item'] - $_SESSION['SmartyPaginate'][$id]['item_limit'];
         return ($_prev_item > 0) ? $_prev_item : false;
     }
 
-    protected static function _getNextPageItem(string $id = 'default'): int|false
+    public static function _getNextPageItem(string $id = 'default'): int|false
     {
         $_next_item = $_SESSION['SmartyPaginate'][$id]['current_item'] + $_SESSION['SmartyPaginate'][$id]['item_limit'];
         return ($_next_item <= $_SESSION['SmartyPaginate'][$id]['item_total']) ? $_next_item : false;

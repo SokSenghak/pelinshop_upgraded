@@ -20,7 +20,7 @@
 							<select name="branch_id" class="form-control">
 							<option value="">---ជ្រើសរើសឈ្មោះសាខា (Select Branch Name)---</option>
 							{foreach from=$list_branch item=branch}
-								<option value="{$branch.id}" {if $smarty.get.branch_id eq $branch.id}selected{/if}>{$branch.name}</option>
+								<option value="{$branch.id}" {if $smarty.get.branch_id|default:'' eq $branch.id}selected{/if}>{$branch.name}</option>
 							{/foreach}
 							</select>
 							<span class="input-group-btn">
@@ -47,7 +47,7 @@
 					{if $product_transfer_data|@count gt 0}
 					{foreach from=$product_transfer_data item=data name=foo}
 					<tr {if $smarty.foreach.foo.first}class="active"{/if}>
-						<td class="text-center">{if $smarty.get.next eq 1 OR $smarty.get.next eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next-1}{/if}</td>
+						<td class="text-center">{if $smarty.get.next|default:'' eq 1 OR $smarty.get.next|default:'' eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next|default:1-1}{/if}</td>
 						<td class="text-center">{$data.branch_name}</td>
 						<td class="text-center"><i class="fa fa-mobile fa-lg"></i>&nbsp;{$data.qty}</td>
 						<td class="text-center">{$data.transfered_date}</td>

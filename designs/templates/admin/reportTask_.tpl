@@ -16,10 +16,10 @@
               <div class="col-md-5">
                 <div class="input-group" style="padding-bottom:10px;">
                 <span class="input-group-addon">កាលបរិច្ឆេទ (Date)</span>
-                  <input type="text" id="order_from" value ="{if $smarty.get.order_from}{$smarty.get.order_from|escape}{elseif $order_from}{$order_from}{/if}"
+                  <input type="text" id="order_from" value ="{if $smarty.get.order_from|default:''}{$smarty.get.order_from|default:''|escape}{elseif $order_from}{$order_from}{/if}"
                     class="form-control" name="order_from" placeholder="Example: 2016-08-01"/>
                     <span class="input-group-addon">ទៅ (To)</span>
-                  <input type="text" id="order_to" value ="{$smarty.get.order_to|escape}" class="form-control"
+                  <input type="text" id="order_to" value ="{$smarty.get.order_to|default:''|escape}" class="form-control"
                     name="order_to" placeholder="Example: 2016-08-30" />
                 </div>
               </div>
@@ -29,13 +29,13 @@
                   <select name="brd" class="form-control">
                       <option value="">-----ជ្រើសរើសសាខា (Select Brand)-----</option>
                     {foreach from=$list_brand_name item="brand"}
-                      <option value="{$brand.id}" {if $smarty.get.brd|escape eq $brand.id}selected{/if}>{$brand.name}</option>
+                      <option value="{$brand.id}" {if $smarty.get.brd|default:''|escape eq $brand.id}selected{/if}>{$brand.name}</option>
                     {/foreach}
                   </select>
                 </div>
               </div>
               <div class="col-md-3">
-                <label class="checkbox-inline"><input type="checkbox" name="summary" value="1" {if $smarty.get.summary eq 1}checked{/if}>មើលសង្ខេប (View Summary)</label>
+                <label class="checkbox-inline"><input type="checkbox" name="summary" value="1" {if $smarty.get.summary|default:'' eq 1}checked{/if}>មើលសង្ខេប (View Summary)</label>
               &nbsp;&nbsp;
                 <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-search"></i>&nbsp;ស្វែងរក (Search)</button>
               </div>
@@ -43,7 +43,7 @@
             <div class="row">
               <div class="col-md-3">
                 <a target="_blank" class="btn btn-primary {if $brand_group|@count eq 0}disabled{/if}"
-                href="{$admin_file}?task=report&amp;action=show&amp;order_from={$smarty.get.order_from}&amp;order_to={$smarty.get.order_to}&amp;brd={$smarty.get.brd}&amp;sts={$smarty.get.sts}&amp;summary={$smarty.get.summary|escape}">
+                href="{$admin_file}?task=report&amp;action=show&amp;order_from={$smarty.get.order_from|default:''|escape}&amp;order_to={$smarty.get.order_to|default:''|escape}&amp;brd={$smarty.get.brd|default:''|escape}&amp;sts={$smarty.get.sts|default:''|escape}&amp;summary={$smarty.get.summary|default:''|escape}">
                   <i class="glyphicon glyphicon-print"></i>&nbsp;បោះពុម្ពរបាយការណ៍ (Print Report)</a>
               </div>
             </div>
@@ -51,7 +51,7 @@
         </div>
       </div>
       <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover" {if $smarty.get.summary eq 1}style="display:none;"{/if}>
+        <table class="table table-bordered table-striped table-hover" {if $smarty.get.summary|default:'' eq 1}style="display:none;"{/if}>
             <thead>
               <tr class="table_header">
                 <th class="text-center">លេខ IMEI (IMEI Number)</th>

@@ -84,7 +84,7 @@
           <form role="form" method="get" action="{$admin_file}?task=staff" class="form-horizontal">
             <input type="hidden" name="task" value="staff">
             <div class="input-group">
-              <input type="text" name="kwd" value="{$smarty.get.kwd}" class="form-control" placeholder="ស្វែងរក (Search for...)" autofocus>
+              <input type="text" name="kwd" value="{$smarty.get.kwd|default:''|escape}" class="form-control" placeholder="ស្វែងរក (Search for...)" autofocus>
             <span class="input-group-btn">
               <button class="btn btn-success" type="submit"><li class="glyphicon glyphicon-search"></li></button>
             </span>
@@ -109,7 +109,7 @@
         {if $list_staff_data|@count gt 0}
         {foreach from=$list_staff_data item=data}
           <tr>
-            <td class="text-center">{if $smarty.get.next eq 1 OR $smarty.get.next eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next-1}{/if}</td>
+            <td class="text-center">{if $smarty.get.next|default:'' eq 1 OR $smarty.get.next|default:'' eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next|default:1-1}{/if}</td>
             <td class="text-center" valign="top" width="100px;">
               <!-- <a data-toggle="tooltip" data-original-title="View Staff History" class="btn btn-xs btn-success" href="{$admin_file}?task=staff&amp;action=history&amp;id={$data.id}">
                 <i class="glyphicon glyphicon-list"></i> History

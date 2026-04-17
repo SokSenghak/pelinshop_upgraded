@@ -36,9 +36,9 @@
     </div>
     <div class="col-md-9 nopadding">
       <p class="text-center" style="font-size:20px;font-weight:bold"> Product Stock Report (
-        {if $smarty.get.order_from}{$smarty.get.order_from|date_format:"%d-%m-%Y"}{/if}
-        {if $smarty.get.order_to} - {$smarty.get.order_to|date_format:"%d-%m-%Y"}{/if}
-        {if $smarty.get.order_from eq '' AND $smarty.get.order_to eq ''}{$smarty.now|date_format:"%d-%m-%Y"}{/if}
+        {if $smarty.get.order_from|default:''}{$smarty.get.order_from|default:''|date_format:"%d-%m-%Y"}{/if}
+        {if $smarty.get.order_to|default:''} - {$smarty.get.order_to|default:''|date_format:"%d-%m-%Y"}{/if}
+        {if $smarty.get.order_from|default:'' eq '' AND $smarty.get.order_to|default:'' eq ''}{$smarty.now|date_format:"%d-%m-%Y"}{/if}
         ) </p>
       <p></p>
     </div>
@@ -59,7 +59,7 @@
         </tbody>
       </table>
 
-      {if $smarty.get.summary eq ''}
+      {if $smarty.get.summary|default:'' eq ''}
         <table class="table table-bordered">
           {foreach from=$brand_data{$group.brand_id} item=data key=k}
           <tbody>
@@ -93,7 +93,7 @@
         </tbody>
       </table>
 
-      {if $smarty.get.summary eq ''}
+      {if $smarty.get.summary|default:'' eq ''}
         <table class="table table-bordered">
           {foreach from=$branch_data{$group.branch_id} item=data key=k}
           <tbody>

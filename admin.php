@@ -83,7 +83,8 @@ if('permission' === $task)
   //action: add & edit
   $error = array();
   if($action === 'status' && !empty($_GET['id'])) {
-    $common->update('task_permission', $field = ['status' => $_GET['status']], $condition = ['id' => $_GET['id']]);
+    $status = $_GET['status'] ?? '';
+    $common->update('task_permission', $field = ['status' => $status], $condition = ['id' => $_GET['id']]);
     header('location:'.$admin_file.'?task=permission');
     exit;
   }
@@ -112,7 +113,7 @@ if('role' === $task)
     if($_POST) 
     {
       $role_name = $common->clean_string($_POST['role']);
-      $task      = $_POST['task'];
+      $task      = $_POST['task'] ?? [];
         
       if(empty($role_name))  $error['role_name'] = 1;
       if(COUNT($task) == 0)  $error['task'] = 1;
@@ -140,7 +141,7 @@ if('role' === $task)
     if($_POST) 
     {
       $role_name = $common->clean_string($_POST['role']);
-      $task      = $_POST['task'];
+      $task      = $_POST['task'] ?? [];
         
       if(empty($role_name))  $error['role_name'] = 1;
       if(COUNT($task) == 0)  $error['task'] = 1;
@@ -202,7 +203,7 @@ if('staff' === $task)
     $staff_role = $common->clean_string($_POST['role']);
     $staff_password = $common->clean_string($_POST['staff_password']);
     $branch_id  = $common->clean_string($_POST['branch_id']);
-    $staff_id   = $common->clean_string($_POST['staff_id']);
+    $staff_id   = $common->clean_string($_POST['staff_id'] ?? '');
     if(empty($staff_role)) $error['role'] = 1;
     if(empty($branch_id)) $error['brand'] = 1;
     if(empty($staff_name))  $error['staff_name'] = 1;
@@ -434,7 +435,7 @@ if('product_history' === $task)
 	$brand = (!empty($_GET['brand'])) ? $_GET['brand'] : '';
 	$from = (!empty($_GET['from'])) ? $_GET['from'] : '';
 	$to = (!empty($_GET['to'])) ? $_GET['to'] : '';
-  $tab = ($_GET['tab']) ? $_GET['tab'] : 1;
+  $tab = !empty($_GET['tab']) ? $_GET['tab'] : 1;
 
 	if(empty($from)) $from = date("Y-m-d");
 	if(empty($to)) $to = date("Y-m-d");
@@ -910,7 +911,7 @@ if('product' === $task)
   $brand = (!empty($_GET['brand'])) ? $_GET['brand'] : '';
   $from = (!empty($_GET['from'])) ? $_GET['from'] : '';
   $to = (!empty($_GET['to'])) ? $_GET['to'] : '';
-  $tab = ($_GET['tab']) ? $_GET['tab'] : 1;
+  $tab = !empty($_GET['tab']) ? $_GET['tab'] : 1;
   // $product = getProductData($kwd);
   $product = getListProduct($kwd, $branch_id, $maker, $brand, '', $num_blank='', 30, $pr_st_id, $from, $to, $tab);
   if($total_data > 0) {
@@ -1105,7 +1106,7 @@ if('product_order' === $task) {
 	}
 
 	//index of product order
-	$geturl = '?task='.$task.'&from='.$_GET['from'].'&to='.$_GET['to'].'&kwd='.urlencode($kwd);
+		$geturl = '?task='.$task.'&from='.$from.'&to='.$to.'&kwd='.urlencode($kwd);
 	(new SmartyPaginate)->setUrl($geturl);
 	(new SmartyPaginate)->setLimit(30);
 	(new SmartyPaginate)->assign($smarty_appform);
@@ -1163,7 +1164,7 @@ if('product_note' === $task)
     $limit = 20;
     $page = empty($_GET['page']) ? 1 : $_GET['page'];
     $offset = ($page - 1) * $limit;
-    $results = getProcutNote($_GET['q'], $offset, $limit);
+    $results = getProcutNote($_GET['q'] ?? '', $offset, $limit);
 
     header('Content-type: application/json');
     echo json_encode(array('items' => $results, 'total_count'=>$total_data));
@@ -1207,7 +1208,7 @@ if('product_note' === $task)
                     }
                 }
             $proNote = getProductNote($imei, $order_id);
-            if($_GET['imei'])
+            if(!empty($_GET['imei']))
             {
                 $edit = getImeiId($_GET['imei']);
                 $smarty_appform->assign('edit', $edit);
@@ -1217,18 +1218,52 @@ if('product_note' === $task)
         }
     }
   }
-  $dataProImei = getProductOrderDataByImei($_GET['imei']);
-  $order = getListOrderItemData($dataProImei['order_id']);
-  $proNote = getProductNote($_GET['imei'], $dataProImei['order_id'], 5);
+  $imei = !empty($_GET['imei']) ? $_GET['imei'] : '';
+  $note_data = [
+    'id' => '',
+    'note' => '',
+    'note_detail' => '',
+  ];
+  $dataProImei = getProductOrderDataByImei($imei);
+  if (!is_array($dataProImei)) {
+    $dataProImei = [
+      'id' => null,
+      'order_id' => null,
+      'imei' => null,
+      'title' => '',
+      'price' => '',
+      'storage_name' => '',
+      'description' => '',
+      'pro_date_in' => '',
+    ];
+  }
+  $order = !empty($dataProImei['order_id']) ? getListOrderItemData($dataProImei['order_id']) : ['id' => ''];
+  if (!is_array($order)) {
+    $order = ['id' => ''];
+  }
+  $proNote = !empty($dataProImei['order_id']) ? getProductNote($imei, $dataProImei['order_id'], 5) : [];
+  if (!is_array($proNote)) {
+    $proNote = [];
+  }
   //Get Note BY ID For Edit note
   if(!empty($_GET['edit_note_id']))
   {
     $note_data = $common->find('note', $condiction = ['id' => $_GET['edit_note_id']], $type = 'one');
+    if (!is_array($note_data)) {
+      $note_data = [
+        'id' => '',
+        'note' => '',
+        'note_detail' => '',
+      ];
+    }
     $smarty_appform->assign('edit_note', $note_data);
   }
-  if($_GET['imei'])
+  if(!empty($imei))
   {
-    $getImei = getImeiId($_GET['imei']);
+    $getImei = getImeiId($imei);
+    if (!is_array($getImei)) {
+      $getImei = [];
+    }
     $smarty_appform->assign('getImei', $getImei);
   }
   if($total_data > 0) {
@@ -1236,7 +1271,7 @@ if('product_note' === $task)
   } else {
     (new SmartyPaginate)->setTotal(1);
   }
-  $geturl = '?task='.$task.'&id='.$_GET['id'].'&imei='.$_GET['imei'];
+  $geturl = '?task='.$task.'&id='.($_GET['id'] ?? '').'&imei='.$imei;
   (new SmartyPaginate)->setUrl($geturl);
   (new SmartyPaginate)->setLimit(5);
   (new SmartyPaginate)->assign($smarty_appform);
@@ -1563,6 +1598,7 @@ if('internal_invoice' === $task) {
     $from    = (!empty($_GET['from'])) ? $_GET['from'] : '';
     $to      = (!empty($_GET['to'])) ? $_GET['to'] : '';
     $customer_id = (!empty($_GET['customer_id'])) ? $_GET['customer_id'] : '';
+    $branch      = (!empty($_GET['branch'])) ? $_GET['branch'] : '';
     $orderListPrint = getOrderListPrintDataByCustomer($kwd, $from, $to, $customer_id, $status=1);
     $total_less = getTotal();
     // if($total_data > 0) {
@@ -1588,6 +1624,7 @@ if('internal_invoice' === $task) {
 	$from    = (!empty($_GET['from'])) ? $_GET['from'] : '';
 	$to      = (!empty($_GET['to'])) ? $_GET['to'] : '';
 	$customer_id = (!empty($_GET['customer_id'])) ? $_GET['customer_id'] : '';
+	$branch      = (!empty($_GET['branch'])) ? $_GET['branch'] : '';
   $total_less = getTotal();
 	$orderList = getOrderListDataByCustomer($kwd, $from, $to, $customer_id, $status=1, 10);
 	if($total_data > 0) {
@@ -1596,7 +1633,7 @@ if('internal_invoice' === $task) {
 		(new SmartyPaginate)->setTotal(1);
 	}
 	//index of order List
-	$geturl = '?task='.$task.'&from='.$_GET['from'].'&to='.$_GET['to'].'&kwd='.urlencode($kwd);
+	$geturl = '?task='.$task.'&from='.$from.'&to='.$to.'&kwd='.urlencode($kwd);
 	(new SmartyPaginate)->setUrl($geturl);
 	(new SmartyPaginate)->setLimit(10);
 	(new SmartyPaginate)->assign($smarty_appform);
@@ -1704,7 +1741,7 @@ if ('report_split_payment' == $task)
 		(new SmartyPaginate)->setTotal(1);
 	}
 	//index of order List
-	$geturl = '?task='.$task.'&from='.$_GET['from'].'&to='.$_GET['to'].'&kwd='.urlencode($kwd);
+		$geturl = '?task='.$task.'&from='.$from.'&to='.$to.'&kwd='.urlencode($kwd);
 	(new SmartyPaginate)->setUrl($geturl);
 	(new SmartyPaginate)->setLimit(10);
 	(new SmartyPaginate)->assign($smarty_appform);
@@ -1738,7 +1775,7 @@ if('order_list' === $task) {
     (new SmartyPaginate)->setTotal(1);
   }
   //index of order List
-  $geturl = '?task='.$task.'&from='.$_GET['from'].'&to='.$_GET['to'].'&kwd='.urlencode($kwd);
+  $geturl = '?task='.$task.'&from='.$from.'&to='.$to.'&kwd='.urlencode($kwd);
   (new SmartyPaginate)->setUrl($geturl);
   (new SmartyPaginate)->setLimit(30);
   (new SmartyPaginate)->assign($smarty_appform);
@@ -2288,7 +2325,7 @@ if('summary_fixed_product' === $task)
       (new SmartyPaginate)->setTotal(1);
     }
     //index of fixed List
-    $geturl = '?task='.$task.'&from='.$_GET['from_fixed'].'&to='.$_GET['to_fixed'].$_GET['c_from_fixed'].'&to='.$_GET['c_to_fixed'].'&kwd='.urlencode($kwd);
+    $geturl = '?task='.$task.'&from='.$from.'&to='.$to.'&c_from='.$c_from.'&c_to='.$c_to.'&kwd='.urlencode($kwd);
     (new SmartyPaginate)->setUrl($geturl);
     (new SmartyPaginate)->setLimit(10);
     (new SmartyPaginate)->assign($smarty_appform);

@@ -15,7 +15,7 @@
 						<input type="hidden" name="task" value="product_history">
 						<div class="form-group" style="margin-bottom: 5px;">
 						<div class="input-group date">
-							<input type="text" id="date_from" value ="{if $smarty.get.from}{$smarty.get.from|escape}{else}{$from_date}{/if}" class="form-control" name="from" placeholder="ពីកាលបរិច្ឆេទបញ្ជាទិញ (Order Date From)"/>
+							<input type="text" id="date_from" value ="{if $smarty.get.from|default:''}{$smarty.get.from|default:''|escape}{else}{$from_date}{/if}" class="form-control" name="from" placeholder="ពីកាលបរិច្ឆេទបញ្ជាទិញ (Order Date From)"/>
 							<span class="input-group-addon">
 							<span class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -23,7 +23,7 @@
 						</div>
 						<div class="form-group" style="margin-bottom: 5px;">
 						<div class="input-group date" >
-							<input type="text" id="date_to" value ="{if $smarty.get.to}{$smarty.get.to|escape}{else}{$to_date}{/if}" class="form-control" name="to" placeholder="ទៅកាលបរិច្ឆេទបញ្ជាទិញ (Order Date To)" />
+							<input type="text" id="date_to" value ="{if $smarty.get.to|default:''}{$smarty.get.to|default:''|escape}{else}{$to_date}{/if}" class="form-control" name="to" placeholder="ទៅកាលបរិច្ឆេទបញ្ជាទិញ (Order Date To)" />
 							<span class="input-group-addon">
 							<span class="glyphicon glyphicon-calendar"></span>
 							</span>
@@ -31,7 +31,7 @@
 						</div>
 						<div class="form-group" style="margin-bottom: 5px;">
 							<button class="btn btn-success" type="submit"><li class="glyphicon glyphicon-search"></li>&nbsp;ស្វែងរក (Search)</button>
-							<a href="{$admin_file}?task=product_history&amp;action=print&amp;from={$smarty.get.from}&amp;to={$smarty.get.to}" class="btn btn-primary" target="_blank">
+							<a href="{$admin_file}?task=product_history&amp;action=print&amp;from={$smarty.get.from|default:''|escape}&amp;to={$smarty.get.to|default:''|escape}" class="btn btn-primary" target="_blank">
 								<li class="glyphicon glyphicon-search"></li> បោះពុម្ពរបាយការណ៍ (Print Report)
 							</a>
 						</div>
@@ -40,12 +40,12 @@
 			</div>
       <!-- Nav tabs -->
       <ul class="nav nav-pills" role="tablist">
-        <li role="presentation" class="{if !$smarty.get.tab or $smarty.get.tab eq 1 } active {/if} khmer-first-font"><a href="{$admin_file_name}?task=product_history&from={$smarty.get.from}&to={$smarty.get.to}&tab=1"><i class="fa fa-line-chart"></i> ព័ត៌មានផលិតផល កាត់ស្តុក</a></li>
-        <li role="presentation" class="{if $smarty.get.tab and $smarty.get.tab eq 2 } active {/if} khmer-first-font"><a href="{$admin_file_name}?task=product_history&from={$smarty.get.from}&to={$smarty.get.to}&tab=2"><i class="fa fa-flag"></i> ព័ត៌មានផលិតផល មិនកាត់ស្តុក</a></li>
+        <li role="presentation" class="{if !$smarty.get.tab|default:'' or $smarty.get.tab|default:'' eq 1 } active {/if} khmer-first-font"><a href="{$admin_file_name}?task=product_history&from={$smarty.get.from|default:''|escape}&to={$smarty.get.to|default:''|escape}&tab=1"><i class="fa fa-line-chart"></i> ព័ត៌មានផលិតផល កាត់ស្តុក</a></li>
+        <li role="presentation" class="{if $smarty.get.tab|default:'' and $smarty.get.tab|default:'' eq 2 } active {/if} khmer-first-font"><a href="{$admin_file_name}?task=product_history&from={$smarty.get.from|default:''|escape}&to={$smarty.get.to|default:''|escape}&tab=2"><i class="fa fa-flag"></i> ព័ត៌មានផលិតផល មិនកាត់ស្តុក</a></li>
       </ul>
       <!-- Tab panes -->
       <div class="tab-content">
-      <div role="tabpanel" class="tab-pane {if !$smarty.get.tab or $smarty.get.tab eq 1 } active {/if}" id="cutting">
+      <div role="tabpanel" class="tab-pane {if !$smarty.get.tab|default:'' or $smarty.get.tab|default:'' eq 1 } active {/if}" id="cutting">
           <hr style="margin-top:5px;margin-bottom:5px;" />
           <div class="table-responsive">
             <table class="table table-bordered table-striped">
@@ -91,8 +91,8 @@
                             <input type="hidden" name="maker_id" value="{$v.maker_id}">
                             <input type="hidden" name="product_title" value="{$v.title}">
                             <input type="hidden" name="company_title" value="{$data.company_title}">
-                            <input type="hidden" name="date_from" value ="{if $smarty.get.from}{$smarty.get.from|escape}{else}{$from_date}{/if}"/>
-                            <input type="hidden" name="date_to" value ="{if $smarty.get.to}{$smarty.get.to|escape}{else}{$to_date}{/if}" />
+                            <input type="hidden" name="date_from" value ="{if $smarty.get.from|default:''}{$smarty.get.from|default:''|escape}{else}{$from_date}{/if}"/>
+                            <input type="hidden" name="date_to" value ="{if $smarty.get.to|default:''}{$smarty.get.to|default:''|escape}{else}{$to_date}{/if}" />
                             <br><br>
                             <div class="form-group">
                               <label for="cost" style="float: left;">តម្លៃដើម (Cost): <span style="color: red;">*</span></label>
@@ -148,7 +148,7 @@
             </table>
           </div>
       </div>
-    <div role="tabpanel" class="tab-pane {if $smarty.get.tab and $smarty.get.tab eq 2 } active {/if}" id="no-cutting">
+    <div role="tabpanel" class="tab-pane {if $smarty.get.tab|default:'' and $smarty.get.tab|default:'' eq 2 } active {/if}" id="no-cutting">
       <hr style="margin-top:5px;margin-bottom:5px;" />
       <div class="table-responsive">
         <table class="table table-bordered table-striped">
@@ -194,8 +194,8 @@
                         <input type="hidden" name="maker_id" value="{$v.maker_id}">
                         <input type="hidden" name="product_title" value="{$v.title}">
                         <input type="hidden" name="company_title" value="{$data.company_title}">
-                        <input type="hidden" name="date_from" value ="{if $smarty.get.from}{$smarty.get.from|escape}{else}{$from_date}{/if}"/>
-                        <input type="hidden" name="date_to" value ="{if $smarty.get.to}{$smarty.get.to|escape}{else}{$to_date}{/if}" />
+                        <input type="hidden" name="date_from" value ="{if $smarty.get.from|default:''}{$smarty.get.from|default:''|escape}{else}{$from_date}{/if}"/>
+                        <input type="hidden" name="date_to" value ="{if $smarty.get.to|default:''}{$smarty.get.to|default:''|escape}{else}{$to_date}{/if}" />
                         <br><br>
                         <div class="form-group">
                           <label for="cost" style="float: left;">តម្លៃដើម (Cost): <span style="color: red;">*</span></label>

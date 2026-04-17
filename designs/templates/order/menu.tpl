@@ -10,7 +10,7 @@
       </button>
       <a style="font-size: 20px;" class="navbar-brand" href="{$order_file}"><span class="label label-sm label-success"> PELIN SHOP</span></a>
     </div>
-    {if $smarty.get.task|escape != 'history' and $smarty.get.task|escape ne 'order_list'}
+    {if $smarty.get.task|default:''|escape != 'history' and $smarty.get.task|default:''|escape ne 'order_list'}
     <form class="navbar-form navbar-left" role="search">
       <div class="form-group">
         <div class="input-group">

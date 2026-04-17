@@ -6,7 +6,7 @@
     <li class="active">របាយការណ៍ផលិតផលសង្ខេប (Summary Product Report)</li>
   </ul>
   <div class="panel panel-primary">
-    <div class="panel-heading"><h3 class="panel-title">របាយការណ៍ផលិតផលសង្ខេប (Summary Product Report) <a href="{$admin_file}?task=summary_product&amp;action=summary_product_print&amp;branch_id={$smarty.get.branch_id}&amp;pr_st_id={$smarty.get.pr_st_id}&amp;kwd={$smarty.get.kwd}" class="btn btn-primary btn-sm" target="_blank">បោះពុម្ព (Print)</a></h3> </div>
+    <div class="panel-heading"><h3 class="panel-title">របាយការណ៍ផលិតផលសង្ខេប (Summary Product Report) <a href="{$admin_file}?task=summary_product&amp;action=summary_product_print&amp;branch_id={$smarty.get.branch_id|default:''|escape}&amp;pr_st_id={$smarty.get.pr_st_id|default:''|escape}&amp;kwd={$smarty.get.kwd|default:''|escape}" class="btn btn-primary btn-sm" target="_blank">បោះពុម្ព (Print)</a></h3> </div>
     <div class="panel-body">
         <div class="row">
           <div class="col-md-12">
@@ -16,7 +16,7 @@
                 <select name="branch_id" class="form-control" style="padding:0px">
                 <option value="">---ជ្រើសរើសឈ្មោះសាខា (Select Branch Name)---</option>
                 {foreach from=$list_branch item=branch}
-                  <option value="{$branch.id}" {if $smarty.get.branch_id eq $branch.id}selected{/if}>{$branch.name}</option>
+                  <option value="{$branch.id}" {if $smarty.get.branch_id|default:'' eq $branch.id}selected{/if}>{$branch.name}</option>
                 {/foreach}
                 </select>
               </div>
@@ -24,13 +24,13 @@
                 <select name="pr_st_id" class="form-control" style="padding:0px">
                 <option value="">---ជ្រើសរើសទំហំផ្ទុកផលិតផល (Select Product Storage)---</option>
                 {foreach from=$product_storage item=data}
-                  <option value="{$data.id}" {if $smarty.get.pr_st_id eq $data.id}selected{/if}>{$data.name}</option>
+                  <option value="{$data.id}" {if $smarty.get.pr_st_id|default:'' eq $data.id}selected{/if}>{$data.name}</option>
                 {/foreach}
                 </select>
               </div>
               <div class="form-group" style="margin-bottom: 5px;">
                 <div class="input-group">
-                  <input type="text" value="{$smarty.get.kwd|escape}" name="kwd" class="form-control" style="padding:0px" placeholder="Search by IMEI Number or Title" autofocus>
+                  <input type="text" value="{$smarty.get.kwd|default:''|escape}" name="kwd" class="form-control" style="padding:0px" placeholder="Search by IMEI Number or Title" autofocus>
                     <span class="input-group-btn">
                       <button class="btn btn-success" type="submit"><li class="glyphicon glyphicon-search"></li>&nbsp;ស្វែងរក (Search)</button>
                   </span>

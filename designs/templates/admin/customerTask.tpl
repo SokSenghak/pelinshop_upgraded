@@ -14,7 +14,7 @@
             <form role="form" method="get" action="{$admin_file}?task=customer" class="form-horizontal">
               <input type="hidden" name="task" value="customer">
               <div class="input-group">
-                <input type="text" value="{$smarty.get.kwd|escape}" name="kwd" class="form-control" placeholder="ស្វែងរកឈ្មោះអតិថិជន ឬលេខទូរស័ព្ទ ឬលេខអត្តសញ្ញាណប័ណ្ណ (Search by Customer Name or Phone Number or ID Number)" autofocus>
+                <input type="text" value="{$smarty.get.kwd|default:''|escape}" name="kwd" class="form-control" placeholder="ស្វែងរកឈ្មោះអតិថិជន ឬលេខទូរស័ព្ទ ឬលេខអត្តសញ្ញាណប័ណ្ណ (Search by Customer Name or Phone Number or ID Number)" autofocus>
                 <span class="input-group-btn">
                   <button class="btn btn-success" type="submit"><li class="glyphicon glyphicon-search"></li></button>
                 </span>
@@ -38,7 +38,7 @@
           {if $list_customer_data|@count gt 0}
           {foreach from=$list_customer_data item=data}
             <tr>
-              <td class="text-center">{if $smarty.get.next eq 1 OR $smarty.get.next eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next-1}{/if}</td>
+              <td class="text-center">{if $smarty.get.next|default:'' eq 1 OR $smarty.get.next|default:'' eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next|default:1-1}{/if}</td>
               <td>
                 <div class="text-center" valign="top" width="105px;">
                   <a data-toggle="tooltip" data-original-title="View Customer History" class="btn btn-xs btn-success" href="{$admin_file}?task=customer&amp;action=history&amp;id={$data.id}">

@@ -13,7 +13,7 @@
         </div>
         <div class="btn-group">
           <a class="btn btn-md btn-danger" id="href_print" href="{$admin_file}?task=product&amp;action=all_qrcode_print&amp;num_print=0" target="_blank"><i class="fa fa fa-print"></i>
-            បោះពុម្ព Qrcode ដោយការជ្រើសរើស (Print Qrcode By Select) <span class="badge" id="total_sel">{if $smarty.session.pro_id}{$smarty.session.pro_id|COUNT}{else}0{/if}</span>
+            បោះពុម្ព Qrcode ដោយការជ្រើសរើស (Print Qrcode By Select) <span class="badge" id="total_sel">{if $smarty.session.pro_id|default:[]}{$smarty.session.pro_id|default:[]|COUNT}{else}0{/if}</span>
           </a>
           <button type="button" class="btn btn-primary" id="remove_pro">X</button>
         </div>
@@ -30,7 +30,7 @@
               <select name="maker" class="form-control" style="padding:0px">
                 <option value="">---ជ្រើសរើសក្រុមហ៊ុនផលិត (Choose Product Maker)---</option>
                 {foreach from=$list_maker_name item=maker}
-                  <option value="{$maker.id}" {if $smarty.get.maker eq $maker.id}selected{/if}>{$maker.name}</option>
+                  <option value="{$maker.id}" {if $smarty.get.maker|default:'' eq $maker.id}selected{/if}>{$maker.name}</option>
                 {/foreach}
               </select>
             </div>
@@ -38,7 +38,7 @@
               <select name="brand" class="form-control" style="padding:0px">
                 <option value="">---ជ្រើសរើសម៉ាកផលិតផល (Choose Brand Name)---</option>
                 {foreach from=$list_brand_name item=brand}
-                  <option value="{$brand.id}" {if $smarty.get.brand eq $brand.id}selected{/if}>{$brand.name}</option>
+                  <option value="{$brand.id}" {if $smarty.get.brand|default:'' eq $brand.id}selected{/if}>{$brand.name}</option>
                 {/foreach}
               </select>
             </div>
@@ -46,7 +46,7 @@
               <select name="branch_id" class="form-control" style="padding:0px">
               <option value="">---ជ្រើសរើសសាខា (Select Branch Name)---</option>
               {foreach from=$list_branch item=branch}
-                <option value="{$branch.id}" {if $smarty.get.branch_id eq $branch.id}selected{/if}>{$branch.name}</option>
+                <option value="{$branch.id}" {if $smarty.get.branch_id|default:'' eq $branch.id}selected{/if}>{$branch.name}</option>
               {/foreach}
               </select>
             </div>
@@ -54,13 +54,13 @@
               <select name="pr_st_id" class="form-control" style="padding:0px">
               <option value="">---ជ្រើសរើសទំហំផ្ទុក (Select Product Storage)---</option>
               {foreach from=$product_storage item=data}
-                <option value="{$data.id}" {if $smarty.get.pr_st_id eq $data.id}selected{/if}>{$data.name}</option>
+                <option value="{$data.id}" {if $smarty.get.pr_st_id|default:'' eq $data.id}selected{/if}>{$data.name}</option>
               {/foreach}
               </select>
             </div>
             <div class="form-group" style="margin-bottom: 5px;">
               <div class="input-group date">
-                <input type="text" id="date_from" value ="{$smarty.get.from|escape}" class="form-control" name="from" placeholder="ពីកាលបរិច្ឆេទបញ្ជាទិញ (Order Date From)"/>
+                <input type="text" id="date_from" value ="{$smarty.get.from|default:''|escape}" class="form-control" name="from" placeholder="ពីកាលបរិច្ឆេទបញ្ជាទិញ (Order Date From)"/>
                 <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -68,7 +68,7 @@
             </div>
             <div class="form-group" style="margin-bottom: 5px;">
               <div class="input-group date" >
-                <input type="text" id="date_to" value ="{$smarty.get.to|escape}" class="form-control" name="to" placeholder="ទៅកាលបរិច្ឆេទបញ្ជាទិញ (Order Date To)" />
+                <input type="text" id="date_to" value ="{$smarty.get.to|default:''|escape}" class="form-control" name="to" placeholder="ទៅកាលបរិច្ឆេទបញ្ជាទិញ (Order Date To)" />
                 <span class="input-group-addon">
                   <span class="glyphicon glyphicon-calendar"></span>
                 </span>
@@ -76,7 +76,7 @@
             </div>
             <div class="form-group" style="margin-bottom: 5px;">
               <div class="input-group">
-                <input type="text" value="{$smarty.get.kwd|escape}" name="kwd" class="form-control" style="padding:0px" placeholder=" ស្វែងរកតាមលេខ IMEI ឬឈ្មោះផលិតផល (Search by IMEI Number or Title)" autofocus>
+                <input type="text" value="{$smarty.get.kwd|default:''|escape}" name="kwd" class="form-control" style="padding:0px" placeholder=" ស្វែងរកតាមលេខ IMEI ឬឈ្មោះផលិតផល (Search by IMEI Number or Title)" autofocus>
                   <span class="input-group-btn">
                     <button class="btn btn-success" type="submit"><li class="glyphicon glyphicon-search"></li>&nbsp;ស្វែងរក (Search)</button>
                 </span>
@@ -89,12 +89,12 @@
         <div class="col-md-12">
           <!-- Nav tabs -->
           <ul class="nav nav-pills" role="tablist">
-              <li role="presentation" class="{if !$smarty.get.tab or $smarty.get.tab eq 1 } active {/if} khmer-first-font"><a href="{$admin_file_name}?task=product&maker={$smarty.get.maker}&brand={$smarty.get.brand}&branch_id={$smarty.get.branch_id}&pr_st_id={$smarty.get.pr_st_id}&from={$smarty.get.from}&to={$smarty.get.to}&kwd={$smarty.get.kwd}&tab=1"><i class="fa fa-line-chart"></i> ព័ត៌មានផលិតផល កាត់ស្តុក</a></li>
-              <li role="presentation" class="{if $smarty.get.tab and $smarty.get.tab eq 2 } active {/if} khmer-first-font"><a href="{$admin_file_name}?task=product&maker={$smarty.get.maker}&brand={$smarty.get.brand}&branch_id={$smarty.get.branch_id}&pr_st_id={$smarty.get.pr_st_id}&from={$smarty.get.from}&to={$smarty.get.to}&kwd={$smarty.get.kwd}&tab=2"><i class="fa fa-flag"></i> ព័ត៌មានផលិតផល មិនកាត់ស្តុក</a></li>
+              <li role="presentation" class="{if !$smarty.get.tab|default:'' or $smarty.get.tab|default:'' eq 1 } active {/if} khmer-first-font"><a href="{$admin_file_name}?task=product&maker={$smarty.get.maker|default:''|escape}&brand={$smarty.get.brand|default:''|escape}&branch_id={$smarty.get.branch_id|default:''|escape}&pr_st_id={$smarty.get.pr_st_id|default:''|escape}&from={$smarty.get.from|default:''|escape}&to={$smarty.get.to|default:''|escape}&kwd={$smarty.get.kwd|default:''|escape}&tab=1"><i class="fa fa-line-chart"></i> ព័ត៌មានផលិតផល កាត់ស្តុក</a></li>
+              <li role="presentation" class="{if $smarty.get.tab|default:'' and $smarty.get.tab|default:'' eq 2 } active {/if} khmer-first-font"><a href="{$admin_file_name}?task=product&maker={$smarty.get.maker|default:''|escape}&brand={$smarty.get.brand|default:''|escape}&branch_id={$smarty.get.branch_id|default:''|escape}&pr_st_id={$smarty.get.pr_st_id|default:''|escape}&from={$smarty.get.from|default:''|escape}&to={$smarty.get.to|default:''|escape}&kwd={$smarty.get.kwd|default:''|escape}&tab=2"><i class="fa fa-flag"></i> ព័ត៌មានផលិតផល មិនកាត់ស្តុក</a></li>
           </ul>
           <!-- Tab panes -->
           <div class="tab-content">
-            <div role="tabpanel" class="tab-pane {if !$smarty.get.tab or $smarty.get.tab eq 1 } active {/if}" id="cutting">
+            <div role="tabpanel" class="tab-pane {if !$smarty.get.tab|default:'' or $smarty.get.tab|default:'' eq 1 } active {/if}" id="cutting">
               <hr style="margin-top:5px;margin-bottom:5px;" />
               <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover">
@@ -126,10 +126,10 @@
                       {if $list_product_data|@count gt 0}
                       {foreach from=$list_product_data item=data key=k name=foo}
                       <tr {if $smarty.foreach.foo.first}class="active"{/if}>
-                        <td class="text-center">{if $smarty.get.next eq 1 OR $smarty.get.next eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next-1}{/if}</td>
+                        <td class="text-center">{if $smarty.get.next|default:'' eq 1 OR $smarty.get.next|default:'' eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next|default:1-1}{/if}</td>
                         <td valign="top">
                           <div class="checkbox">
-                            <label><input type="checkbox" value="{$data.id}" class="chk_print" {foreach from=$smarty.session.pro_id item=vp}{if $vp eq $data.id}checked{/if}{/foreach}></label>
+                            <label><input type="checkbox" value="{$data.id}" class="chk_print" {foreach from=$smarty.session.pro_id|default:[] item=vp}{if $vp eq $data.id}checked{/if}{/foreach}></label>
                           </div>
                         </td>
                         <td class="text-center" valign="top" width="155px;">
@@ -228,7 +228,7 @@
                 </table>
               </div>
             </div>
-            <div role="tabpanel" class="tab-pane {if $smarty.get.tab and $smarty.get.tab eq 2 } active {/if}" id="no-cutting">
+            <div role="tabpanel" class="tab-pane {if $smarty.get.tab|default:'' and $smarty.get.tab|default:'' eq 2 } active {/if}" id="no-cutting">
               <hr style="margin-top:5px;margin-bottom:5px;" />
               <div class="table-responsive">
                 <table class="table table-bordered table-striped table-hover">
@@ -260,10 +260,10 @@
                       {if $list_product_data|@count gt 0}
                       {foreach from=$list_product_data item=data key=k name=foo}
                       <tr {if $smarty.foreach.foo.first}class="active"{/if}>
-                        <td class="text-center">{if $smarty.get.next eq 1 OR $smarty.get.next eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next-1}{/if}</td>
+                        <td class="text-center">{if $smarty.get.next|default:'' eq 1 OR $smarty.get.next|default:'' eq '' }{counter}{else}{$smarty.foreach.foo.iteration+$smarty.get.next|default:1-1}{/if}</td>
                         <td valign="top">
                           <div class="checkbox">
-                            <label><input type="checkbox" value="{$data.id}" class="chk_print" {foreach from=$smarty.session.pro_id item=vp}{if $vp eq $data.id}checked{/if}{/foreach}></label>
+                            <label><input type="checkbox" value="{$data.id}" class="chk_print" {foreach from=$smarty.session.pro_id|default:[] item=vp}{if $vp eq $data.id}checked{/if}{/foreach}></label>
                           </div>
                         </td>
                         <td class="text-center" valign="top" width="155px;">
@@ -432,7 +432,7 @@
                         <div class="col-md-5" style="margin-top: 10px;"><label>កាត់ស្តុក (Cutting Stock): </label></div>
                           <div class="col-md-7">
                             <div class="checkbox">
-                            <label><input type="checkbox" id="is_cutting" name="is_cutting" value="2" {if $smarty.get.tab eq 2}checked{/if}><span style="color:red">( ប្រសិនបើធីក មិនកាត់ចេញពីស្តុកនៅពេលលក់ )</span></label>
+                            <label><input type="checkbox" id="is_cutting" name="is_cutting" value="2" {if $smarty.get.tab|default:'' eq 2}checked{/if}><span style="color:red">( ប្រសិនបើធីក មិនកាត់ចេញពីស្តុកនៅពេលលក់ )</span></label>
                           </div>
                         </div>
                       </div>

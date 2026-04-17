@@ -9,7 +9,7 @@
             <h3 class="panel-title"><i class="glyphicon glyphicon-user"></i>&nbsp;កែប្រែព័ត៌មានអតិថិជន (Edit Customer Information)</h3>
         </div>
         <div class="panel-body">
-            <form role="form" action="{$admin_file}?task=customer&amp;action=edit&amp;id={$smarty.get.id}" method="post">
+            <form role="form" action="{$admin_file}?task=customer&amp;action=edit&amp;id={$smarty.get.id|default:''|escape}" method="post">
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">

@@ -15,7 +15,7 @@
   {* {if $smarty.get.error}
     <div class="alert alert-danger" data-dismiss="alert">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-      {if $smarty.get.error eq 1}ឈ្មោះផលិតផល នេះមានរួចហើយ។ (This product title existed.){/if}
+      {if $smarty.get.error|default:'' eq 1}ឈ្មោះផលិតផល នេះមានរួចហើយ។ (This product title existed.){/if}
     </div>
   {/if} *}
   <div class="panel panel-primary">
@@ -53,7 +53,7 @@
           <form role="form" method="get" action="{$admin_file}?task=product_title" class="form-horizontal">
             <input type="hidden" name="task" value="product_title">
             <div class="input-group">
-              <input type="text" value="{$smarty.get.kwd|escape}" name="kwd" class="form-control" placeholder="ស្វែងរក (Search for)...">
+              <input type="text" value="{$smarty.get.kwd|default:''|escape}" name="kwd" class="form-control" placeholder="ស្វែងរក (Search for)...">
                 <span class="input-group-btn">
                   <button class="btn btn-success" type="submit"><li class="glyphicon glyphicon-search"></li></button>
                 </span>
